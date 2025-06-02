@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './common/components/Common.css';
 import { Route, Routes } from 'react-router';
+import LoadingSpinner from './common/components/Loading';
 // import AppLayout from './layout/AppLayout';
 // import HomePage from './pages/HomePage/HomePage';
 // import SearchPage from './pages/SearchPage/SearchPage';
@@ -25,7 +27,7 @@ const PlaylistDetailPage = React.lazy(()=>import('./pages/PlaylistPage/PlaylistD
 
 function App() {
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<LoadingSpinner show={true}/>}>
       <Routes>
         <Route path="/" element={<AppLayout/>}>
           <Route index element={<HomePage/>}></Route>

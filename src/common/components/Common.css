@@ -1,0 +1,101 @@
+/* 전체 화면 오버레이 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(18, 18, 18, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+/* 로딩 컨테이너 */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 음파 스피너 (Wave) */
+.soundwave-spinner {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 40px;
+}
+
+.wave-bar {
+  width: 6px;
+  background-color: #1db954;
+  border-radius: 3px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(1) { 
+  height: 15px; 
+  animation-delay: 0s; 
+}
+.wave-bar:nth-child(2) { 
+  height: 25px; 
+  animation-delay: 0.1s; 
+}
+.wave-bar:nth-child(3) { 
+  height: 35px; 
+  animation-delay: 0.2s; 
+}
+.wave-bar:nth-child(4) { 
+  height: 25px; 
+  animation-delay: 0.3s; 
+}
+.wave-bar:nth-child(5) { 
+  height: 15px; 
+  animation-delay: 0.4s; 
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: scaleY(0.3);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* 페이드 인 애니메이션 */
+.loading-overlay {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .soundwave-spinner {
+    height: 30px;
+  }
+  
+  .wave-bar {
+    width: 4px;
+  }
+  
+  .wave-bar:nth-child(1) { height: 10px; }
+  .wave-bar:nth-child(2) { height: 18px; }
+  .wave-bar:nth-child(3) { height: 25px; }
+  .wave-bar:nth-child(4) { height: 18px; }
+  .wave-bar:nth-child(5) { height: 10px; }
+
+}
