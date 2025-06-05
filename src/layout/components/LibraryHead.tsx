@@ -3,7 +3,6 @@ import LibraryMusicOutlinedIcon from '@mui/icons-material/LibraryMusicOutlined';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import React from 'react'
 import { NavLink } from 'react-router';
-import Library from './Library';
 
 
 const StyledText = styled("div")(({theme})=>({
@@ -26,8 +25,13 @@ const StyledRightButton = styled(NavLink)(({theme})=>({
 const LibraryHead = () => {
   return (
     <div>
-        <StyledText><LibraryMusicOutlinedIcon/><Typography variant="h2" fontWeight={700}>Your Library</Typography><StyledRightButton to="/"><PlaylistAddIcon/></StyledRightButton></StyledText>
-        <Library/>
+        <StyledText>
+          <LibraryMusicOutlinedIcon/>
+          <Typography variant="h2" fontWeight={700}>Your Library</Typography>
+          <StyledRightButton to="/">
+            <PlaylistAddIcon/>
+          </StyledRightButton>
+        </StyledText>
     </div>
   )
 }
