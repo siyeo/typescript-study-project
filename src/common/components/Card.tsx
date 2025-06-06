@@ -10,8 +10,8 @@ interface CardProps {
 }
 
 const AlbumCard = styled("div")(({theme})=>({
-    width:"80%",
-    height:"90%", //100vh ->layout  height
+    width:"100%",
+    height:"100%", //100vh ->layout  height
     margin:"5px",
     padding:"5px"
 }));

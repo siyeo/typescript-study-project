@@ -1,9 +1,10 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './common/components/Common.css';
 import { Route, Routes } from 'react-router';
 import LoadingSpinner from './common/components/Loading';
+import useExchangeToken from './hooks/useExchangeToken';
 // import AppLayout from './layout/AppLayout';
 // import HomePage from './pages/HomePage/HomePage';
 // import SearchPage from './pages/SearchPage/SearchPage';
@@ -12,6 +13,7 @@ import LoadingSpinner from './common/components/Loading';
 
 const AppLayout = React.lazy(()=>import('./layout/AppLayout'))
 const HomePage = React.lazy(()=>import('./pages/HomePage/HomePage'))
+const CallbackPage = React.lazy(()=>import('./pages/LoginPage/CallbackPage'))
 const SearchPage = React.lazy(()=>import('./pages/SearchPage/SearchPage'))
 const SearchResultPage = React.lazy(()=>import('./pages/SearchPage/SearchResultPage'))
 const PlaylistDetailPage = React.lazy(()=>import('./pages/PlaylistPage/PlaylistDetailPage'))
@@ -26,6 +28,16 @@ const PlaylistDetailPage = React.lazy(()=>import('./pages/PlaylistPage/PlaylistD
 // 5. list detail 플레이리스트  [/playlist/:id]
 
 function App() {
+  const urlParams = new URLSearchParams(window.location.search);
+  let code = urlParams.get('code');
+  const codeVerifier = localStorage.getItem('code_verifier');
+  const {mutate : exchangeToken} = useExchangeToken();
+
+  useEffect(()=>{
+    if (code && codeVerifier) {
+      exchangeToken({code, codeVerifier});
+    }
+  }, [code, codeVerifier, exchangeToken]);
   return (
     <Suspense fallback={<LoadingSpinner show={true}/>}>
       <Routes>
@@ -35,6 +47,7 @@ function App() {
           <Route path="search/:keyword" element={<SearchResultPage/>}></Route>
           {/* <Route path="playlist" element={<PlaylistPage/>}></Route> */}
           <Route path="playlist/:id" element={<PlaylistDetailPage/>}></Route>
+          <Route path="/callback" element={<CallbackPage />} />
         </Route>
       </Routes>
     </Suspense>

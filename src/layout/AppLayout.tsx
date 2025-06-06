@@ -30,8 +30,7 @@ const ContentBox = styled(Box)(({theme})=>({
     color:theme.palette.text.primary,
     width:"100%",
     padding:"8px",
-    marginBottom:"8px",
-    marginRight:"8px"
+    marginBottom:"8px"
 }));
 const Navlist = styled("ul")({
     listStyle:"none",
