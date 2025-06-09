@@ -23,14 +23,14 @@ const SideBar = styled("div")(({theme})=>({
         display:"none",
     },
     marginRight:"5px",
+    paddingBottom:"8px"
 }));
 const ContentBox = styled(Box)(({theme})=>({
     borderRadius:"8px",
     backgroundColor:theme.palette.background.paper,
     color:theme.palette.text.primary,
     width:"100%",
-    padding:"8px",
-    marginBottom:"8px"
+    padding:"8px"
 }));
 const Navlist = styled("ul")({
     listStyle:"none",

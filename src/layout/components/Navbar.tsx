@@ -22,7 +22,6 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 
 const Navbar = () => {
   const {data:userProfile} = useGetCurrentUserProfile();
-  console.log(userProfile);
   return (
     <Box 
       display="flex" 
