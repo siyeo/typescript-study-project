@@ -51,7 +51,7 @@ const Library = () => {
                     <Playlist playlistData={page.items || []} />
                 </React.Fragment>
             ))}
-            <div ref={ref}>{isFetchingNextPage && <Loading show={true}/>}</div>
+            <div ref={ref} style={{ minHeight: '1px' }}>{isFetchingNextPage && <Loading show={true}/>}</div>
           </PlaylistContainer>
         ) : <EmptyPlaylist/>
         }

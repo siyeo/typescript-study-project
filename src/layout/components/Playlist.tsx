@@ -3,6 +3,7 @@ import React from 'react'
 import { SimplifiedPlaylist } from '../../models/playlist';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
+import { Navigate, useNavigate } from 'react-router';
 
 // 추가: 각 플레이리스트 내부 레이아웃
 const PlaylistItem = styled("button")(({theme})=>({
@@ -92,10 +93,16 @@ const Playlist = ({ playlistData }: PlaylistProps) => {
 	if (!playlistData || !Array.isArray(playlistData)) {
 		return <div>No playlists available</div>;
 	}
+	const navigate = useNavigate()
+	const handleClick=(id:string|undefined)=>{
+		if (id) {
+			navigate(`/playlist/${id}`);
+		}
+	}
   return (
 	<>
 		{playlistData.map((item: SimplifiedPlaylist) => (
-			<PlaylistItem key={item.id}>
+			<PlaylistItem key={item.id} onClick={()=>handleClick(item.id)}>
 				<ImageContainer>
 					{item.images?.[0]?.url ? (
 						<Image src={item.images[0].url} alt={item.name} />

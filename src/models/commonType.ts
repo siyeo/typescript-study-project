@@ -31,7 +31,16 @@ export interface Owner {
     display_name?:string|null;
 }
 
-export interface Track {
+export interface AddedBy {
+    external_urls:ExternalUrls;
     href?:string;
-    total?:number;
+    id?:string;
+    type?:string;
+    uri?:string;
+}
+
+export interface ExternalIds {
+    isrc?:string;
+    ean?:string;
+    upc?:string;
 }
