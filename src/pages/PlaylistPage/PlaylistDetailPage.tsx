@@ -8,6 +8,7 @@ import DeskTopPlaylistItem from './components/DeskTopPlaylistItem';
 import { PAGE_LIMIT } from '../../configs/commonConfig';
 import Loading from '../../common/components/Loading';
 import { useInView } from 'react-intersection-observer';
+import EmptyPlaylistWithSearch from './components/EmptyPlaylistWithSearch';
 
 const SpotifyTableContainer = styled(TableContainer)<{ component?: React.ElementType }>(({ theme }) => ({
   backgroundColor: '#121212',
@@ -99,16 +100,7 @@ const PlaylistDetailPage = () => {
       <PlaylistDetailHeader playlist={playlist} />
       
       {playlist?.tracks?.total === 0 ? (
-        <Box sx={{ 
-          color: '#b3b3b3', 
-          textAlign: 'center', 
-          padding: 4,
-          fontSize: '16px'
-        }}>
-          <Typography sx={{ color: '#b3b3b3' }}>
-            이 플레이리스트에는 트랙이 없습니다
-          </Typography>
-        </Box>
+        <EmptyPlaylistWithSearch/>
       ) : (
         <Box sx={{ padding: 2, paddingTop: 0 }}>
           <SpotifyTableContainer

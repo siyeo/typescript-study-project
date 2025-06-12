@@ -5,6 +5,7 @@ import './common/components/Common.css';
 import { Route, Routes } from 'react-router';
 import LoadingSpinner from './common/components/Loading';
 import useExchangeToken from './hooks/useExchangeToken';
+import LoginRequiredPage from './pages/LoginPage/LoginRequiredPage';
 // import AppLayout from './layout/AppLayout';
 // import HomePage from './pages/HomePage/HomePage';
 // import SearchPage from './pages/SearchPage/SearchPage';
@@ -48,6 +49,7 @@ function App() {
           {/* <Route path="playlist" element={<PlaylistPage/>}></Route> */}
           <Route path="playlist/:id" element={<PlaylistDetailPage/>}></Route>
           <Route path="/callback" element={<CallbackPage />} />
+          <Route path="/login-required" element={<LoginRequiredPage />} />
         </Route>
       </Routes>
     </Suspense>
