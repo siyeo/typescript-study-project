@@ -153,7 +153,7 @@ const PlaylistDetailHeader: React.FC<PlaylistComponentProps> = ({ playlist }) =>
         </PlaylistTitle>
 
         {/* 플레이리스트 설명 */}
-        {description && (
+        {description  && description !== "null" && description.trim() !== "" && (
           <PlaylistDescription variant="body2">
             {decodeHtmlEntities(description)}
           </PlaylistDescription>
