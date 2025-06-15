@@ -1,4 +1,4 @@
-import { CreatePlaylistRequest, GetCurrentUserPlaylistRequest, GetCurrentUserPlaylistResponse, GetPlaylistItemsRequest, GetPlaylistItemsResponse, GetPlaylistRequest, Playlist } from "../models/playlist";
+import { AddPlaylistRequest, AddPlayListResponse, CreatePlaylistRequest, GetCurrentUserPlaylistRequest, GetCurrentUserPlaylistResponse, GetPlaylistItemsRequest, GetPlaylistItemsResponse, GetPlaylistRequest, Playlist } from "../models/playlist";
 import api from "../utils/api";
 
 export const getCurrentUserPlaylists=async({limit, offset}:GetCurrentUserPlaylistRequest):Promise<GetCurrentUserPlaylistResponse>=> {
@@ -44,5 +44,14 @@ export const createPlaylist = async (user_id:string, params:CreatePlaylistReques
         return response.data;
     } catch (error) {
         throw new Error("Fail to create playlist");
+    }
+}
+
+export const addPlaylistItems = async (playlist_id:string, params:AddPlaylistRequest):Promise<AddPlayListResponse> => {
+    try{
+        const response = await api.post(`/playlists/${playlist_id}/tracks`, params);
+        return response.data;
+    } catch (error) {
+        throw new Error("Fail to add playlist items");
     }
 }

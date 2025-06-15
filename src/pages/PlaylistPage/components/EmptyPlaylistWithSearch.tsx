@@ -52,7 +52,7 @@ const searchStyles = {
   },
 };
 
-const EmptyPlaylistWithSearch = () => {
+const EmptyPlaylistWithSearch = ({id}:{id:string}) => {
   const [keyword, setKeyword] = useState<string>("");
   const {data,  
   isLoading, 
@@ -95,9 +95,9 @@ const EmptyPlaylistWithSearch = () => {
               }}
             />
           </Box>
-          {data?.pages.map((item)=>{
+          {data?.pages.map((item, index)=>{
             if (!item.tracks) return false
-            return <SearchResultList list={item.tracks?.items} keyword={keyword}></SearchResultList>;
+            return <SearchResultList list={item.tracks?.items} keyword={keyword} playlistId={id} key={index}></SearchResultList>;
           })}
       </div>
       <div ref={ref} style={{ minHeight: '1px' }}>

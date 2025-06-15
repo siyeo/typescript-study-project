@@ -99,8 +99,8 @@ const PlaylistDetailPage = () => {
     <Box sx={{ backgroundColor: '#000000', minHeight: '100vh' }}>
       <PlaylistDetailHeader playlist={playlist} />
       
-      {playlist?.tracks?.total === 0 ? (
-        <EmptyPlaylistWithSearch/>
+      {(!playlistItems?.pages?.[0]?.items?.length) ? (
+        <EmptyPlaylistWithSearch id={id}/>
       ) : (
         <Box sx={{ padding: 2, paddingTop: 0 }}>
           <SpotifyTableContainer

@@ -71,3 +71,12 @@ export interface CreatePlaylistRequest {
     collaborative?:boolean;
     description?:string;
 }
+
+export interface AddPlaylistRequest {
+    position?:number;
+    uris?:string[];
+}
+
+export interface AddPlayListResponse {
+    snapshot_id?:string;
+}

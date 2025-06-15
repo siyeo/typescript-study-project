@@ -2,9 +2,12 @@ import React from 'react'
 import { Track } from '../../../models/track';
 import { Box, IconButton, Typography } from '@mui/material';
 import { Add, MusicNote } from '@mui/icons-material';
+import { addPlaylistItems } from '../../../apis/playlistApi';
+import useAddPlaylistItems from '../../../hooks/useAddPlaylistItems';
 interface SearchResultListProps {
     list:Track[];
     keyword:string;
+    playlistId:string;
 }
 
 // 스타일 상수
@@ -125,7 +128,8 @@ const emptyStyles = {
 };
 
 
-const SearchResultList = ({list, keyword}:SearchResultListProps) => {
+const SearchResultList = ({list, keyword, playlistId}:SearchResultListProps) => {
+  const addTrackMutation = useAddPlaylistItems(playlistId);
   return (
     <div>
       {list.length > 0 ?
@@ -183,6 +187,13 @@ const SearchResultList = ({list, keyword}:SearchResultListProps) => {
                 <IconButton
                   sx={styles.addButton}
                   size="small"
+                  onClick={() => {
+                    addTrackMutation.mutate({
+                      params: {
+                        position: 0,
+                        uris: [`spotify:track:${track.id}`]
+                      }
+                  })}}
                 >
                   <Add />
                 </IconButton>
