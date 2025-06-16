@@ -8,12 +8,15 @@ import {
   ListItemText,
   Divider,
   Typography,
+  TextField,
+  InputAdornment,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import {
   Person as PersonIcon,
   Logout as LogoutIcon,
   Settings as SettingsIcon,
+  Search,
 } from '@mui/icons-material';
 import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
 import LoginButton from '../../common/components/LoginButton';
@@ -35,12 +38,63 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   }
 }));
 
+const searchStyles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 3,
+    flex: 1,
+    maxWidth: 'none',
+  },
+  searchField: {
+    width: '100%',
+    maxWidth: '450px',
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: '#121212',
+      borderRadius: '25px',
+      height: '48px',
+      fontSize: '16px',
+      color: 'white',
+      '& fieldset': {
+        border: '2px solid transparent',
+      },
+      '&:hover fieldset': {
+        border: '2px solid #535353',
+      },
+      '&.Mui-focused fieldset': {
+        border: '2px solid #1db954',
+      },
+      '& input': {
+        padding: '12px 16px',
+        '&::placeholder': {
+          color: '#b3b3b3',
+          opacity: 1,
+        },
+      },
+    },
+    '& .MuiInputAdornment-root': {
+      marginLeft: '12px',
+    },
+  },
+  searchIcon: {
+    color: '#b3b3b3',
+    fontSize: '24px',
+  },
+};
+
+
 
 const Navbar = () => {
+  const [keyword, setKeyword] = useState<string>("");
   // 실제로 useGetCurrentUserProfile 훅 사용
   const { data: userProfile } = useGetCurrentUserProfile();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const handleSearchKeyword = (event:React.ChangeEvent<HTMLInputElement>) =>{
+      setKeyword(event.target.value);
+  }
 
   const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -83,10 +137,26 @@ const Navbar = () => {
   return (
     <Box 
       display="flex" 
-      justifyContent="flex-end" 
+      justifyContent="space-between" 
       alignItems="center" 
       height="64px"
     >
+      <Box sx={searchStyles.container}>
+        <TextField
+          value={keyword}
+          onChange={handleSearchKeyword}
+          placeholder="어떤 콘텐츠를 감상하고 싶으세요?"
+          variant="outlined"
+          sx={searchStyles.searchField}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search sx={searchStyles.searchIcon} />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
       {userProfile ? (
         <>
           <StyledAvatar 

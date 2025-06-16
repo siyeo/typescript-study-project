@@ -1,3 +1,4 @@
+import { GetSevealBrowseCategoriesResponse } from "../models/category";
 import { AddPlaylistRequest, AddPlayListResponse, CreatePlaylistRequest, GetCurrentUserPlaylistRequest, GetCurrentUserPlaylistResponse, GetPlaylistItemsRequest, GetPlaylistItemsResponse, GetPlaylistRequest, Playlist } from "../models/playlist";
 import api from "../utils/api";
 
