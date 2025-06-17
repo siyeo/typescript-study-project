@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Box, IconButton, styled, Typography } from '@mui/material';
 import { PlayArrow, FavoriteBorder, MoreHoriz } from '@mui/icons-material';
 import Loading from '../../common/components/Loading';
+import React from 'react';
 
 
 const MainContainer = styled(Box)({
@@ -178,9 +179,20 @@ const TrackDuration = styled(Typography)({
 
 const ArtistAlbumGrid = styled(Box)({
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+  gridTemplateColumns: 'repeat(2, 1fr)', // 기본: 1개
+  gridAutoRows: '1fr',
   gap: '16px',
   marginBottom: '48px',
+  '@media (min-width: 768px)': {
+    gridTemplateColumns: 'repeat(3, 1fr)', // 중간: 3개
+  },
+  '@media (min-width: 1200px)': {
+    gridTemplateColumns: 'repeat(6, 1fr)', // 큰 화면: 6개
+  },
+  '& > *': {
+    width: '100%',
+    minWidth: 0,
+  },
 });
 
 const ArtistAlbumCard = styled(Box)({
@@ -190,6 +202,11 @@ const ArtistAlbumCard = styled(Box)({
   cursor: 'pointer',
   transition: 'all 0.3s ease',
   position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+  width: '100%',
+  minWidth: 0,
   '&:hover': {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     '& .hover-play-button': {
@@ -201,7 +218,10 @@ const ArtistAlbumCard = styled(Box)({
 
 const ArtistAlbumImageContainer = styled(Box)({
   position: 'relative',
-  marginBottom: '16px',
+  marginBottom: '12px',
+  width: '100%',
+  aspectRatio: '1',
+  flexShrink: 0,
 });
 
 const ArtistImage = styled('img')({
@@ -237,21 +257,37 @@ const HoverPlayButton = styled(IconButton)({
 });
 
 const ArtistAlbumTitle = styled(Typography)({
-  fontSize: '16px',
   fontWeight: 'bold',
   color: 'white',
   marginBottom: '4px',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+  width: '100%',
+  fontSize: '14px', // 기본 크기
+  flexShrink: 0,
+  '@media (min-width: 768px)': {
+    fontSize: '15px',
+  },
+  '@media (min-width: 1200px)': {
+    fontSize: '16px',
+  },
 });
 
 const ArtistAlbumSubtitle = styled(Typography)({
-  fontSize: '14px',
   color: 'rgba(255, 255, 255, 0.7)',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+  width: '100%',
+  fontSize: '12px', // 기본 크기
+  marginTop: 'auto',
+  '@media (min-width: 768px)': {
+    fontSize: '13px',
+  },
+  '@media (min-width: 1200px)': {
+    fontSize: '14px',
+  },
 });
 
 const SearchResultPage = () => {
@@ -277,6 +313,22 @@ const SearchResultPage = () => {
   const tracks = searchData.tracks?.items || [];
   const artists = searchData.artists?.items || [];
   const albums = searchData.albums?.items || [];
+
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  
+  React.useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  const getDisplayCount = () => {
+    if (windowWidth >= 1200) return 6; // 데스크톱: 6개
+    if (windowWidth >= 768) return 3;  // 태블릿: 3개
+    return 2; // 모바일: 2개
+  };
+  const displayCount = getDisplayCount();
+  const displayArtists = artists.slice(0, displayCount);
+  const displayAlbums = albums.slice(0, displayCount);
 
   const formatDuration = (ms?: number) => {
     if (!ms) return '0:00';
@@ -391,7 +443,7 @@ const SearchResultPage = () => {
         <Box>
           <SectionTitle>Artists</SectionTitle>
           <ArtistAlbumGrid>
-            {artists.map((artist) => (
+            {displayArtists.map((artist) => (
               <ArtistAlbumCard key={artist.id}>
                 <ArtistAlbumImageContainer>
                   <ArtistImage 
@@ -415,7 +467,7 @@ const SearchResultPage = () => {
         <Box>
           <SectionTitle>Albums</SectionTitle>
           <ArtistAlbumGrid>
-            {albums.map((album) => (
+            {displayAlbums.map((album) => (
               <ArtistAlbumCard key={album.id}>
                 <ArtistAlbumImageContainer>
                   <AlbumImage 
