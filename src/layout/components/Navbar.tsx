@@ -20,6 +20,7 @@ import {
 } from '@mui/icons-material';
 import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
 import LoginButton from '../../common/components/LoginButton';
+import { useNavigate } from 'react-router';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: "45px",
@@ -91,10 +92,19 @@ const Navbar = () => {
   const { data: userProfile } = useGetCurrentUserProfile();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleSearchKeyword = (event:React.ChangeEvent<HTMLInputElement>) =>{
       setKeyword(event.target.value);
   }
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (keyword.trim()) {
+        navigate(`/search/${encodeURIComponent(keyword.trim())}`);
+      }
+    }
+  };
 
   const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -145,6 +155,7 @@ const Navbar = () => {
         <TextField
           value={keyword}
           onChange={handleSearchKeyword}
+          onKeyDown={handleKeyDown}
           placeholder="어떤 콘텐츠를 감상하고 싶으세요?"
           variant="outlined"
           sx={searchStyles.searchField}
