@@ -1,12 +1,14 @@
 import useSearchItemsByKeyword from '../../hooks/useSearchItemsByKeyword';
+import useGetCurrentUserPlaylists from '../../hooks/useGetCurrentUserPlaylists';
 import { SEARCH_TYPE } from '../../models/search';
 import { PAGE_LIMIT } from '../../configs/commonConfig';
 import { useNavigate, useParams } from 'react-router';
 import { Box, IconButton, styled, Typography } from '@mui/material';
-import { PlayArrow, FavoriteBorder, MoreHoriz } from '@mui/icons-material';
+import { PlayArrow, MoreHoriz } from '@mui/icons-material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Loading from '../../common/components/Loading';
-import React from 'react';
-
+import React, { useState } from 'react';
+import PlaylistDropdown from '../../layout/components/PlaylistDropdown';
 
 const MainContainer = styled(Box)({
   backgroundColor: '#121212',
@@ -113,11 +115,14 @@ const TrackItem = styled(Box)({
     },
     '& .play-button': {
       display: 'block',
-    },
-    '& .track-actions': {
-      display: 'flex',
-    },
+    }
   },
+});
+
+const TrackActions = styled(Box)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
 });
 
 const TrackNumber = styled(Typography)({
@@ -162,12 +167,6 @@ const TrackArtist = styled(Typography)({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-});
-
-const TrackActions = styled(Box)({
-  display: 'none',
-  alignItems: 'center',
-  gap: '8px',
 });
 
 const TrackDuration = styled(Typography)({
@@ -289,6 +288,8 @@ const ArtistAlbumSubtitle = styled(Typography)({
     fontSize: '14px',
   },
 });
+
+
 
 const SearchResultPage = () => {
   const { keyword } = useParams<{ keyword: string }>();
@@ -421,9 +422,7 @@ const SearchResultPage = () => {
                     </TrackArtist>
                   </TrackInfo>
                   <TrackActions className="track-actions">
-                    <ActionButton size="small">
-                      <FavoriteBorder style={{ width: '16px', height: '16px' }} />
-                    </ActionButton>
+                    <PlaylistDropdown track={track} />
                     <ActionButton size="small">
                       <MoreHoriz style={{ width: '16px', height: '16px' }} />
                     </ActionButton>

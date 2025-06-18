@@ -40,19 +40,17 @@ function App() {
     }
   }, [code, codeVerifier, exchangeToken]);
   return (
-    <Suspense fallback={<LoadingSpinner show={true}/>}>
-      <Routes>
-        <Route path="/" element={<AppLayout/>}>
-          <Route index element={<HomePage/>}></Route>
-          <Route path="search" element={<SearchPage/>}></Route>
-          <Route path="search/:keyword" element={<SearchResultPage/>}></Route>
-          {/* <Route path="playlist" element={<PlaylistPage/>}></Route> */}
-          <Route path="playlist/:id" element={<PlaylistDetailPage/>}></Route>
-          <Route path="/callback" element={<CallbackPage />} />
-          <Route path="/login-required" element={<LoginRequiredPage />} />
-        </Route>
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route path="/" element={<AppLayout/>}>
+        <Route index element={<HomePage/>}></Route>
+        <Route path="search" element={<SearchPage/>}></Route>
+        <Route path="search/:keyword" element={<SearchResultPage/>}></Route>
+        {/* <Route path="playlist" element={<PlaylistPage/>}></Route> */}
+        <Route path="playlist/:id" element={<PlaylistDetailPage/>}></Route>
+        <Route path="/callback" element={<CallbackPage />} />
+        <Route path="/login-required" element={<LoginRequiredPage />} />
+      </Route>
+    </Routes>
   );
 }
 

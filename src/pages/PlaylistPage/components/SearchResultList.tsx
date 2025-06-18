@@ -129,7 +129,7 @@ const emptyStyles = {
 
 
 const SearchResultList = ({list, keyword, playlistId}:SearchResultListProps) => {
-  const addTrackMutation = useAddPlaylistItems(playlistId);
+  const addTrackMutation = useAddPlaylistItems(true);
   return (
     <div>
       {list.length > 0 ?
@@ -189,6 +189,7 @@ const SearchResultList = ({list, keyword, playlistId}:SearchResultListProps) => 
                   size="small"
                   onClick={() => {
                     addTrackMutation.mutate({
+                      playlistId: playlistId,
                       params: {
                         position: 0,
                         uris: [`spotify:track:${track.id}`]

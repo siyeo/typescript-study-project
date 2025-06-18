@@ -12,7 +12,7 @@ export interface BasePlaylist {
     description?:string|null;
     external_urls?:ExternalUrls;
     href?:string;
-    id?:string;
+    id:string;
     images?:Image[];
     name?:string;
     owner?:Owner;
