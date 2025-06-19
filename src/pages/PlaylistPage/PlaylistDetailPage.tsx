@@ -96,7 +96,7 @@ const PlaylistDetailPage = () => {
 
   // const 변수로 Spotify 스타일 테이블 정의
   const spotifyPlaylistTable = (
-    <Box sx={{ backgroundColor: '#000000', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: '#000000', minHeight: '100vh' }} >
       <PlaylistDetailHeader playlist={playlist} />
       
       {(!playlistItems?.pages?.[0]?.items?.length) ? (

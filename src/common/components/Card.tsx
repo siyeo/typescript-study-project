@@ -1,11 +1,12 @@
-import { styled, Typography } from '@mui/material'
-import React from 'react'
+import { Box, styled, Typography } from '@mui/material'
+import { MusicNote } from '@mui/icons-material'
+import React, { useState } from 'react'
 import theme from '../../theme';
 import PlayButton from './PlayButton';
 
 interface CardProps {
-    name:string;
-    image:string;
+    name?:string;
+    image?:string;
     artistName:string|undefined;
 }
 
@@ -54,18 +55,52 @@ const Text = styled("div")({
     padding: "8px 0"
 });
 
+const ImagePlaceholder = styled(Box)({
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "rgba(255, 255, 255, 0.7)"
+});
+
 const Card = ({image, name, artistName}:CardProps) => {
+    const [imageError, setImageError] = useState(false);
+    
+    // 기본값 설정
+    const safeName = name || "제목 없음";
+    const safeArtistName = artistName || "아티스트 정보 없음";
+    const hasValidImage = image && !imageError;
+    
+    const handleImageError = () => {
+        setImageError(true);
+    };
   return (
     <AlbumCard>
         <ImageContainer>
-          <Image src={image} alt={name} />
-          <PlayButtonWrapper className="play-button">
-              <PlayButton />
-          </PlayButtonWrapper>
+            {hasValidImage ? (
+                <Image 
+                    src={image} 
+                    alt={safeName}
+                    onError={handleImageError}
+                />
+            ) : (
+                <ImagePlaceholder>
+                    <MusicNote sx={{ fontSize: '48px' }} />
+                </ImagePlaceholder>
+            )}
+            <PlayButtonWrapper className="play-button">
+                <PlayButton />
+            </PlayButtonWrapper>
         </ImageContainer>
         <Text>
-          <Typography variant='h2' fontWeight={700} noWrap>{name}</Typography>
-          <Typography color={theme.palette.text.secondary} noWrap>{artistName}</Typography>
+            <Typography variant='h2' fontWeight={700} noWrap>
+                {safeName}
+            </Typography>
+            <Typography color={theme.palette.text.secondary} noWrap>
+                {safeArtistName}
+            </Typography>
         </Text>
     </AlbumCard>
   )

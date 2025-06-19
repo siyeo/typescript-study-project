@@ -1,6 +1,10 @@
 import { SimplifiedAlbum } from "./album";
 import { Artist } from "./artist";
-import { ExternalIds, ExternalUrls, Image } from "./commonType";
+import { CopyrightObject, ExternalIds, ExternalUrls, Image } from "./commonType";
+
+export interface SeveralTracksResponse {
+    tracks:Track[];
+}
 
 export interface Track {
     album?:SimplifiedAlbum;
@@ -85,11 +89,6 @@ export interface EpisodeShow {
     type:string;
     uri:string;
     total_episodes:number;
-}
-
-export interface CopyrightObject {
-    text?:string;
-    type?:string;
 }
 
 export interface SimplifiedAudioBook {

@@ -44,3 +44,8 @@ export interface ExternalIds {
     ean?:string;
     upc?:string;
 }
+
+export interface CopyrightObject {
+    text?:string;
+    type?:string;
+}
