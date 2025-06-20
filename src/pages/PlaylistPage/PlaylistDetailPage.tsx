@@ -52,6 +52,24 @@ const SpotifyTableHead = styled(TableHead)({
   },
 });
 
+// 모바일에서 숨겨지는 헤더 셀
+const MobileHiddenHeaderCell = styled(TableCell)(({ theme }) => ({
+  // 모바일에서 숨김
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+// 반응형 Title 셀
+const ResponsiveTitleCell = styled(TableCell)(({ theme }) => ({
+  // 데스크톱에서의 너비
+  width: '40%',
+  // 모바일에서는 더 넓게
+  [theme.breakpoints.down('sm')]: {
+    width: '75%', // 앨범과 날짜가 숨겨지므로 더 넓게
+  },
+}));
+
 
 const PlaylistDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -116,15 +134,15 @@ const PlaylistDetailPage = () => {
                   <TableCell sx={{ width: '40px', textAlign: 'center' }}>
                     #
                   </TableCell>
-                  <TableCell sx={{ width: '40%' }}>
+                  <ResponsiveTitleCell>
                     Title
-                  </TableCell>
-                  <TableCell sx={{ width: '25%' }}>
+                  </ResponsiveTitleCell>
+                  <MobileHiddenHeaderCell sx={{ width: '25%' }}>
                     Album
-                  </TableCell>
-                  <TableCell sx={{ width: '20%' }}>
+                  </MobileHiddenHeaderCell>
+                  <MobileHiddenHeaderCell sx={{ width: '20%' }}>
                     Date added
-                  </TableCell>
+                  </MobileHiddenHeaderCell>
                   <TableCell sx={{ width: '80px', textAlign: 'center' }}>
                     Duration
                   </TableCell>

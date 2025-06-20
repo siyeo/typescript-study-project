@@ -9,25 +9,42 @@ interface PlaylistComponentProps {
   playlist?: Playlist;
 }
 
-const PlaylistContainer = styled(Box)({
+const PlaylistContainer = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(180deg, rgba(29, 185, 84, 0.2) 0%, rgba(18, 18, 18, 1) 100%)',
   padding: '24px',
-  borderRadius:'8px',
+  borderRadius: '8px',
   display: 'flex',
   alignItems: 'flex-end',
   gap: '24px',
   color: 'white',
-});
+  // 모바일에서는 세로 레이아웃
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: '20px',
+    gap: '16px',
+  },
+}));
 
-const CoverImage = styled('img')({
+const CoverImage = styled('img')(({ theme }) => ({
   width: '232px',
   height: '232px',
   borderRadius: '4px',
   boxShadow: '0 4px 60px rgba(0, 0, 0, 0.5)',
   objectFit: 'cover',
-});
+  // 모바일에서는 더 작게
+  [theme.breakpoints.down('md')]: {
+    width: '200px',
+    height: '200px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '200px',
+    height: '200px',
+  },
+}));
 
-const PlaceholderIcon = styled(Box)({
+const PlaceholderIcon = styled(Box)(({ theme }) => ({
   width: '232px',
   height: '232px',
   backgroundColor: '#282828',
@@ -36,40 +53,71 @@ const PlaceholderIcon = styled(Box)({
   alignItems: 'center',
   justifyContent: 'center',
   boxShadow: '0 4px 60px rgba(0, 0, 0, 0.5)',
-});
+  // 모바일에서는 더 작게
+  [theme.breakpoints.down('md')]: {
+    width: '200px',
+    height: '200px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '200px',
+    height: '200px',
+  },
+}));
 
-const ContentSection = styled(Box)({
+const ContentSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
   flex: 1,
-});
+  // 모바일에서는 중앙 정렬
+  [theme.breakpoints.down('md')]: {
+    alignItems: 'center',
+    flex: 'none',
+    width: '100%',
+  },
+}));
 
-const PlaylistType = styled(Typography)({
+const PlaylistType = styled(Typography)(({ theme }) => ({
   fontSize: '14px',
   fontWeight: 400,
   textTransform: 'capitalize',
   marginBottom: '4px',
-});
+  [theme.breakpoints.down('md')]: {
+    fontSize: '12px',
+    marginBottom: '8px',
+  },
+}));
 
-const PlaylistTitle = styled(Typography)({
+const PlaylistTitle = styled(Typography)(({ theme }) => ({
   fontSize: '30px',
   fontWeight: 900,
   textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-  '@media (max-width: 768px)': {
-    fontSize: '48px',
-    lineHeight: '48px',
+  lineHeight: '1.2',
+  // 모바일에서는 더 큰 타이틀
+  [theme.breakpoints.down('md')]: {
+    fontSize: '28px',
+    lineHeight: '1.1',
+    marginBottom: '8px',
   },
-});
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '24px',
+  },
+}));
 
-const PlaylistDescription = styled(Typography)({
+const PlaylistDescription = styled(Typography)(({ theme }) => ({
   fontSize: '14px',
   fontWeight: 400,
   color: '#b3b3b3',
   marginBottom: '8px',
-});
+  // 모바일에서는 좀 더 작게
+  [theme.breakpoints.down('md')]: {
+    fontSize: '13px',
+    lineHeight: '1.4',
+    marginBottom: '12px',
+  },
+}));
 
-const MetaInfo = styled(Box)({
+const MetaInfo = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '4px',
@@ -80,9 +128,20 @@ const MetaInfo = styled(Box)({
     margin: '0 4px',
     color: '#b3b3b3',
   },
-});
+  // 모바일에서는 중앙 정렬과 줄바꿈 허용
+  [theme.breakpoints.down('md')]: {
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    fontSize: '13px',
+    gap: '6px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '12px',
+    gap: '4px',
+  },
+}));
 
-const OwnerButton = styled('button')({
+const OwnerButton = styled('button')(({ theme }) => ({
   color: 'white',
   textDecoration: 'none',
   fontWeight: 500,
@@ -95,11 +154,24 @@ const OwnerButton = styled('button')({
   '&:hover': {
     textDecoration: 'underline',
   },
-});
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '13px',
+  },
+}));
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: "20px",
   height: "20px",
+  [theme.breakpoints.down('sm')]: {
+    width: "16px",
+    height: "16px",
+  },
+}));
+
+const MobileMetaItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '6px',
 }));
 
 const PlaylistDetailHeader: React.FC<PlaylistComponentProps> = ({ playlist }) => {
@@ -136,7 +208,7 @@ const PlaylistDetailHeader: React.FC<PlaylistComponentProps> = ({ playlist }) =>
         <CoverImage src={images[0].url} alt={`${name} playlist cover`} />
       ) : (
         <PlaceholderIcon>
-          <MusicNoteIcon sx={{ fontSize: '64px', color: '#7f7f7f' }} />
+          <MusicNoteIcon sx={{ fontSize: { xs: '48px', md: '64px' }, color: '#7f7f7f' }} />
         </PlaceholderIcon>
       )}
 
@@ -153,7 +225,7 @@ const PlaylistDetailHeader: React.FC<PlaylistComponentProps> = ({ playlist }) =>
         </PlaylistTitle>
 
         {/* 플레이리스트 설명 */}
-        {description  && description !== "null" && description.trim() !== "" && (
+        {description && description !== "null" && description.trim() !== "" && (
           <PlaylistDescription variant="body2">
             {decodeHtmlEntities(description)}
           </PlaylistDescription>
@@ -162,25 +234,25 @@ const PlaylistDetailHeader: React.FC<PlaylistComponentProps> = ({ playlist }) =>
         {/* 메타 정보 (소유자, 팔로워 수, 곡 수) */}
         <MetaInfo>
           {owner?.display_name && (
-            <>
+            <MobileMetaItem>
               <StyledAvatar src="https://upload.wikimedia.org/wikipedia/commons/7/75/Spotify_icon.png"/>
               <OwnerButton onClick={handleOwnerClick}>
                 {owner.display_name}
               </OwnerButton>
               <span className="separator">•</span>
-            </>
+            </MobileMetaItem>
           )}
           
           {followers?.total !== undefined && (
-            <>
+            <MobileMetaItem>
               <span>{followers.total.toLocaleString()} followers</span>
               <span className="separator">•</span>
-            </>
+            </MobileMetaItem>
           )}
           
-          <span>
-            {tracks?.total || 0} songs
-          </span>
+          <MobileMetaItem>
+            <span>{tracks?.total || 0} songs</span>
+          </MobileMetaItem>
         </MetaInfo>
       </ContentSection>
     </PlaylistContainer>

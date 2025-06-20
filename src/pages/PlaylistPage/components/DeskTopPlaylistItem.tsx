@@ -16,6 +16,22 @@ export const SpotifyTableRow = styled(TableRow)({
   },
 });
 
+const MobileHiddenCell = styled(TableCell)(({ theme }) => ({
+  color: '#b3b3b3',
+  // 모바일에서 숨김
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+const ResponsiveTableCell = styled(TableCell)(({ theme }) => ({
+  // 데스크톱에서의 너비
+  width: '37%',
+  // 모바일에서는 더 넓게
+  [theme.breakpoints.down('sm')]: {
+    width: '65%', // 앨범명과 날짜가 숨겨지므로 더 넓게
+  },
+}));
 
 interface DeskTopPlaylistItemProps {
 	index:number;
@@ -80,7 +96,7 @@ const DeskTopPlaylistItem = ({item, index}: DeskTopPlaylistItemProps) => {
 				{index}
 			</TableCell>
 		
-			<TableCell sx={{ width: '37%' }}>
+			<ResponsiveTableCell>
 				<Box>
 				<Box sx={{ 
 					fontWeight: 400, 
@@ -97,25 +113,25 @@ const DeskTopPlaylistItem = ({item, index}: DeskTopPlaylistItemProps) => {
 					{isEpisode(item.track) ? "Unknown Artist" : item.track.artists?.[0]?.name}
 				</Box>
 				</Box>
-			</TableCell>
+			</ResponsiveTableCell>
 		
-			<TableCell 
+			{/* 앨범명 - 모바일에서 숨김 */}
+			<MobileHiddenCell 
 				sx={{ 
-				color: '#b3b3b3',
 				width: '38%' 
 				}}
 			>
 				{isEpisode(item.track) ? "N/A" : item.track?.album?.name}
-			</TableCell>
+			</MobileHiddenCell>
 		
-			<TableCell 
+			{/* 날짜 - 모바일에서 숨김 */}
+			<MobileHiddenCell 
 				sx={{ 
-				color: '#b3b3b3',
 				width: '10%' 
 				}}
 			>
 				{formatDateToYYYYMMDD(item.added_at) || "Unknown"}
-			</TableCell>
+			</MobileHiddenCell>
 			
 			<TableCell 
 				sx={{ 

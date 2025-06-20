@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router';
 import LoadingSpinner from './common/components/Loading';
 import useExchangeToken from './hooks/useExchangeToken';
 import LoginRequiredPage from './pages/LoginPage/LoginRequiredPage';
+// import MobileLibraryPage from './pages/PlaylistPage/MobileLibraryPage';
 // import AppLayout from './layout/AppLayout';
 // import HomePage from './pages/HomePage/HomePage';
 // import SearchPage from './pages/SearchPage/SearchPage';
@@ -18,6 +19,7 @@ const CallbackPage = React.lazy(()=>import('./pages/LoginPage/CallbackPage'))
 const SearchPage = React.lazy(()=>import('./pages/SearchPage/SearchPage'))
 const SearchResultPage = React.lazy(()=>import('./pages/SearchPage/SearchResultPage'))
 const PlaylistDetailPage = React.lazy(()=>import('./pages/PlaylistPage/PlaylistDetailPage'))
+const MobileLibraryPage = React.lazy(()=>import('./pages/PlaylistPage/MobileLibraryPage'))
 
 
 // login spotify 에서 제공하는 부분 따로 디자인 구현은 필요 없음음
@@ -46,6 +48,7 @@ function App() {
         <Route path="search" element={<SearchPage/>}></Route>
         <Route path="search/:keyword" element={<SearchResultPage/>}></Route>
         {/* <Route path="playlist" element={<PlaylistPage/>}></Route> */}
+        <Route path="mobileLibrary" element={<MobileLibraryPage/>}></Route>
         <Route path="playlist/:id" element={<PlaylistDetailPage/>}></Route>
         <Route path="/callback" element={<CallbackPage />} />
         <Route path="/login-required" element={<LoginRequiredPage />} />

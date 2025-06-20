@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LibraryHead from './components/LibraryHead';
 import Library from './components/Library';
 import Navbar from './components/Navbar';
+import MobileNavbar from './components/MobileNavbar';
 
 const Layout = styled("div")({
     display:"flex",
@@ -61,7 +62,7 @@ const OutletArea = styled(Box)({
     flex: 1, // 남은 공간 모두 차지
     overflow: "auto", // 여기서만 스크롤!
     marginTop: "8px", // Navbar와 간격
-
+    overflowX:"hidden",
     // 커스텀 스크롤바 디자인
     '&::-webkit-scrollbar': {
         width: '8px',
@@ -140,6 +141,9 @@ const AppLayout = () => {
                 <OutletArea>
                     <Outlet />
                 </OutletArea>
+                <NavbarArea>
+                    <MobileNavbar/>
+                </NavbarArea>
             </MainContentArea>
         </Layout>
   )
